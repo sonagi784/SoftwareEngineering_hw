@@ -1,0 +1,32 @@
+<html>
+    <body>
+        <p>2016113519 유지훈</p>
+
+        <p>Please input a number between 5 and 10: </p>
+
+        <input type="text" id="demo">
+        <button type="button" onclick="myFunction()">Test Input</button>
+        
+        <p id="message"></p>
+        
+        <script type="text/javascript">
+            function myFunction() {
+                var message, x;
+                message = document.getElementById("message");
+                message.innerHTML = "";
+                x = document.getElementById("demo").value;
+                try {
+                    if(x == "") throw "is empty";
+                    if(isNaN(x)) throw "is not a number";
+                    x = Number(x);
+                    if(x > 10) throw "is too high";
+                    if(x < 5) throw "is too low";
+                } catch(err) {
+                    message.innerHTML = "input " + err;
+                } finally {
+                    document.getElementById("demo").value = "";
+                }
+            }
+        </script>
+    </body>
+</html>

@@ -7,7 +7,7 @@ def hello_dongguk():
 
 @app.route('/student/<stdName>')
 def hello_student(stdName):
-    return 'Hello %s!' % stdName
+    return '2016113519 유지훈<br>Hello %s!' % stdName
 
 @app.route('/user/<userName>')
 def hello_user(userName):

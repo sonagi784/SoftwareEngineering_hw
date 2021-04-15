@@ -3,7 +3,7 @@ app = Flask(__name__)
 
 @app.route('/hello/<stdName>')
 def hello(stdName):
-    return 'welcome %s!' % stdName
+    return '2016113519 유지훈<br>welcome %s!' % stdName
 
 @app.route('/login', methods = ['POST', 'GET'])
 def login():

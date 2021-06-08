@@ -1,48 +1,29 @@
-from flask import Flask, render_template, request, session, redirect
+from flask import Flask, render_template, flash, redirect
 from flask.helpers import url_for
-from flask.signals import request_finished
 from flask_sqlalchemy import SQLAlchemy
+from diary.models import User, LoginForm
+from diary.config import Config
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URL'] = 'sqlite:///test.db'
+app.config.from_object(Config)
 db = SQLAlchemy(app)
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(80), unique=True)
-    password = db.Column(db.String(80))
-    def __init__(self, username, password):
-        self.username = username
-        self.password = password
 
-
-@app.route("/", methods=['GET', 'POST'])
+@app.route('/')
+@app.route('/index')
 def index():
-    if not session.get('logged_in'):
-        return render_template('index.html')
-    else:
-        if request.method == 'POST':
-            username = (request.form['username'])
-            return render_template('index.html', data=username)
-        return render_template('index.html')
+    return render_template('index.html')
+
+
+@app.route('/about')
+def about():
+    return render_template('about.html', title='About')
 
 
 @app.route('/login', methods=['GET', 'POST'])
-def login():
-    if request.method == 'GET':
-        return render_template('login.html')
-    else:
-        username = request.form['username']
-        password = request.form['password']
-        try:
-            data = User.query.filter_by(username=username, pasword=password).first()
-            if data is not None:
-                session['logged_in'] = True
-                return redirect(url_for('index'))
-            else:
-                return 'Dont Login'
-        except:
-            return 'Dont Login'
-        
-        
-        
+def login(): 
+    loginform = LoginForm()
+    if loginform.validate_on_submit() == True:
+        flash('Login requested for user {}, remember_me={}'.format(loginform.username.data, loginform.remember_me.data))
+        return redirect(url_for('index'))
+    return render_template('login.html', title='Sign In', form=loginform)

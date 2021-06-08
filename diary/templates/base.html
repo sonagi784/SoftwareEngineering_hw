@@ -1,0 +1,39 @@
+<!DOCTYPE HTML>
+<html lang="kr">
+
+<head>
+    <meta charset="utf-8">
+    {% if title %}
+        <title>Flask 블로그 - {{ title }}</title>
+    {% else %}
+        <title>Flask 블로그</title>
+    {% endif %}
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="{{ url_for('index') }}">Home</a>
+            <a href="{{ url_for('about') }}">About</a>
+            <a href="{{ url_for('login') }}">Login</a>
+        </nav>
+        <hr>
+    </header>
+
+    <main role="main">
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        
+        <!-- Main content block -->
+        {% block content %}{% endblock %}
+    </main>
+</body>
+
+</html>

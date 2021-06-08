@@ -1,16 +1,29 @@
-{% extends 'base.html' %}
+{% extends "base.html" %}
 
 {% block content %}
 <div>
     <div>
+        <h1>Hi, {{ current_user.username }}!</h1>
+        
+        {% if form %}
+        <form action="" method="post">
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.post.label }}<br>
+                {{ form.post(cols=32, rows=4) }}<br>
+                {% for error in form.post.errors %} 
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </p>
+            {{ form.submit() }}
+        </form>
+        {% endif %}
+        
         {% for post in posts %}
         <article>
-            <h1>{{ post.title }}</h1>
-            <p>{{ post.content}}</p>
-            <div>
-                <p>{{ post.author.username }}</p>
-                <p>{{ post.date_posted.strftime('%Y-%m-%d') }}</p>
-            </div>
+            <p>Name : {{ post.author.username }}</p>
+            <p>Time : {{ post.timestamp }}</p>
+            <p>{{ post.body }}</p>
         </article>
         {% endfor %}
     </div>

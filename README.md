@@ -13,13 +13,21 @@
 
 ## installation
 
-본 프로젝트는 anaconda env 아래에서 개발되었습니다.
+터미널을 열어 소스코드가 저장될 적당한 디렉토리로 이동한 뒤, github 저장소에 있는 소스코드를 가져옵니다.  
+
+> 본 프로젝트는 anaconda env 아래에서 개발되었습니다.  
 
 ``` git clone https://github.com/sonagi784/SoftwareEngineering_hw.git ```  
 
-SoftwareEngineering_hw 폴더 안에서,
+SoftwareEngineering_hw 폴더안으로 이동합니다.  
+
+``` cd SoftwareEngineering_hw ```
+
+requirements.txt 에 기록된 라이브러리를 한번에 인스톨합니다.
 
 ``` pip install -r requirements.txt ```  
+
+flask 서버를 실행시킵니다.
 
 ``` python app.py ```  
 

@@ -6,7 +6,8 @@
 
 ## 소개
 
-![personal_diary](https://user-images.githubusercontent.com/42791408/121642063-f9516e00-caca-11eb-9656-df2d76874ade.gif)
+![personal_diary](https://user-images.githubusercontent.com/42791408/121642528-9c09ec80-cacb-11eb-9e08-a2497ad46e1a.gif)
+
 > youtube link : https://www.youtube.com/watch?v=OJgLutsxpb0  
   
 - flask 기반의 personal diary 개발  

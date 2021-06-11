@@ -6,7 +6,8 @@
 
 ## 소개
 
-<iframe width="1904" height="800" src="https://www.youtube.com/embed/OJgLutsxpb0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+![personal_diary](https://user-images.githubusercontent.com/42791408/121642063-f9516e00-caca-11eb-9656-df2d76874ade.gif)
+> youtube : https://www.youtube.com/watch?v=OJgLutsxpb0  
   
 - flask 기반의 personal diary 개발  
 - 나만의 diary 업로드 및 삭제

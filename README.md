@@ -6,6 +6,8 @@
 
 ## 소개
 
+<iframe width="640" height="360" src="https://www.youtube.com/embed/OJgLutsxpb0" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+
 - flask 기반의 personal diary 개발  
 - 나만의 diary 업로드 및 삭제
 - 회원가입, 로그인, 로그아웃 기능 지원

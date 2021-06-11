@@ -30,3 +30,4 @@ SoftwareEngineering_hw 폴더 안에서,
 - flask  
 - flask_sqlalchemy  
 - anaconda
+- sqlite

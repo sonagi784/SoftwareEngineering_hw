@@ -4,9 +4,9 @@
 <head>
     <meta charset="utf-8">
     {% if title %}
-        <title>Flask 블로그 - {{ title }}</title>
+        <title>Flask Personal Diary - {{ title }}</title>
     {% else %}
-        <title>Flask 블로그</title>
+        <title>Flask Personal Diary</title>
     {% endif %}
 </head>
 
@@ -17,8 +17,8 @@
             {% if current_user.is_anonymous %}
             <a href="{{ url_for('login') }}">Login</a>
             {% else %}
+            <a href="{{ url_for('image') }}">Image</a>
             <a href="{{ url_for('logout') }}">Logout</a>
-            <a href="{{ url_for('explore') }}">Explore</a>
             {% endif %}
         </nav>
         <hr>

@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>이미지 업로드</h2>
+    <form method=post enctype=multipart/form-data>
+        <input type=file name=file>
+        <input type=submit value=Upload>
+    </form>
+
+<br>
+<hr>
+
+<h2>이미지 갤러리</h2>
+{% if images %}
+    {% for i in range(images | count) %} 
+        <p><img src="{{ url_for('static', filename='images/'+images[i]) }}" alt="{{ images[i] }}" height="500" width="700"></p>
+    {% endfor %}
+{% endif %}
+
+
+{% endblock %}

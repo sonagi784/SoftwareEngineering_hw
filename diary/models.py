@@ -22,21 +22,23 @@ class User(UserMixin, db.Model):
         return check_password_hash(self.password_hash, password)
     def followed_posts(self):
         own = Post.query.filter_by(user_id=self.id)
-        return own.order_by(Post.timestamp.desc())
+        return own.order_by(Post.timestamp.desc()) 
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(140))
     body = db.Column(db.String(140))
     timestamp = db.Column(db.DateTime, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-
+    
     # print(class)
     def __repr__(self):
-        return '<Post {}, {}, {}, {}>'.format(self.id, self.body, self.timestamp, self.user_id)
+        return '<Post {}, {}, {}, {}, {}>'.format(self.id, self.title, self.body, self.timestamp, self.user_id)
 
 
 # session에서 user_id에 맞는 객체를 리로드함
 @login.user_loader
 def load_user(id):
     return User.query.get(int(id))
+

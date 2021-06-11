@@ -1,11 +1,19 @@
-from flask import render_template, flash, redirect, request
+from flask import render_template, flash, redirect, request, send_from_directory
 from flask.helpers import url_for
 from flask_login import current_user, login_user, logout_user, login_required
 from diary import app, db
 from diary.models import User, Post
 from diary.forms import LoginForm, RegistrationForm, PostForm
 from werkzeug.urls import url_parse
+from werkzeug.utils import secure_filename
+import os
 
+
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
+def allowed_file(filename):
+    return '.' in filename and \
+            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+            
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -14,15 +22,55 @@ def index():
     form = PostForm()
     # Post form이 제출된 경우
     if form.validate_on_submit():
-        post = Post(body=form.post.data, author=current_user)
+        post = Post(title=form.title.data, body=form.post.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post have been uploaded!')
         return redirect(url_for('index'))
     
-    # 아직 Post form이 제출되지 않은 경우 / Post list
+    # 아직 Post form이 제출되지 않은 경우
     posts = current_user.followed_posts().all()
-    return render_template("index.html", title='Home Page', form=form, posts=posts)
+    return render_template("index.html", title='Diary', form=form, posts=posts)
+
+
+@app.route('/delete/<id>')
+@login_required
+def delete(id):
+    post = Post.query.filter_by(id=id).first()
+    db.session.delete(post)
+    db.session.commit()
+    flash('Your post have been deleted!')
+    return redirect(url_for('index'))
+
+
+@app.route('/image', methods=['GET', 'POST'])
+@login_required
+def image():
+    imglist = os.listdir(app.config['UPLOAD_FOLDER'])
+    
+    if request.method == 'POST':
+        # check if the post request has the file part
+        if 'file' not in request.files:
+            flash('No file part')
+            return redirect(request.url)
+        file = request.files['file']
+        # if user does not select file, browser also
+        # submit an empty part without filename
+        if file.filename == '':
+            flash('No selected file')
+            return redirect(request.url)
+        if file and allowed_file(file.filename):
+            filename = secure_filename(file.filename)
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+            flash('Image uploaded!')
+            return redirect(url_for('image', title="Image", filename=filename, images=imglist))
+    return render_template("image.html", title="Image", images=imglist)
+
+
+@app.route('/uploads/<filename>')
+@login_required
+def uploaded_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -76,9 +124,3 @@ def register():
     # 아직 회원가입 form이 제출되지 않은 경우 (처음엔 여길 지나감)
     return render_template('register.html', title='Register', form=form)
 
-
-@app.route('/explore')
-@login_required
-def explore():
-    posts = Post.query.order_by(Post.timestamp.desc()).all()
-    return render_template('index.html', title='Explore', posts=posts)

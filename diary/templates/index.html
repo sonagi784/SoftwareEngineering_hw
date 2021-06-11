@@ -6,9 +6,12 @@
         <h1>Hi, {{ current_user.username }}!</h1>
         
         {% if form %}
+        <h2>다이어리 작성</h2>
         <form action="" method="post">
             {{ form.hidden_tag() }}
             <p>
+                {{ form.title.label }}<br>
+                {{ form.title(cols=30, rows=1)}}<br>
                 {{ form.post.label }}<br>
                 {{ form.post(cols=32, rows=4) }}<br>
                 {% for error in form.post.errors %} 
@@ -19,11 +22,16 @@
         </form>
         {% endif %}
         
+        <br>
+        <hr>
+
         {% for post in posts %}
+        <h2>My Personal diary</h2>
         <article>
-            <p>Name : {{ post.author.username }}</p>
-            <p>Time : {{ post.timestamp }}</p>
+            <p>{{ post.title }}</p>
+            <p>by {{ post.author.username }}, on {{ post.timestamp }} - <a href="{{ url_for('delete', id=post.id) }}">Delete</a></p>
             <p>{{ post.body }}</p>
+            <br>
         </article>
         {% endfor %}
     </div>
